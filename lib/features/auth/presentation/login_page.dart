@@ -1,0 +1,78 @@
+import 'package:blog_app/core/theme/app_pallete.dart';
+import 'package:blog_app/features/auth/presentation/signup_page.dart';
+import 'package:blog_app/features/auth/widgets/auth_fields.dart';
+import 'package:blog_app/features/auth/widgets/auth_gradient_button.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+class LoginPage extends StatefulWidget {
+  static const String pageName = '/';
+  const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Sign In.",
+                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 30),
+              AuthFields(hintText: 'Email', controller: emailController),
+              const SizedBox(height: 15),
+              AuthFields(hintText: 'Password', controller: passwordController, isObsucure: true,),
+              const SizedBox(height: 20),
+              AuthGradientButton(buttonText: 'Sign In'),
+              const SizedBox(height: 20),
+
+              //used for placing 2 text widgets in a single line.
+              GestureDetector(
+                onTap: (){
+                  context.goNamed(SignupPage.pageName);
+                },
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Don\'t have an account? ',
+                    style: Theme.of(context).textTheme.titleMedium,
+                    children: [
+                      TextSpan(
+                        text: 'Sign Up',
+                        style: TextStyle(
+                          color: AppPallete.gradient2,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
