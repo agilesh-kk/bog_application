@@ -5,12 +5,12 @@ import 'package:blog_app/features/auth/domain/repository/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 //import 'package:fpdart/src/either.dart';
 
-//implementations of the interfaces created
+//implementations of the interfaces created in domain layer
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSources remoteDataSources;
   const AuthRepositoryImpl(this.remoteDataSources);
-
-  @override
+                             
+  @override                 
   Future<Either<Failure, String>> loginWithEmailPassword({
     required String email,
     required String password,

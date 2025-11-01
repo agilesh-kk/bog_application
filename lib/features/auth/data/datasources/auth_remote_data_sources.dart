@@ -8,8 +8,8 @@ abstract interface class AuthRemoteDataSources {
     required String name,
     required String email,
     required String password,
-  });
-
+  });                       
+                    
   Future<String> loginWithEmailPassword({
     required String email,
     required String password,
