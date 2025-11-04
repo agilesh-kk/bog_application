@@ -1,12 +1,14 @@
 import 'package:blog_app/core/theme/app_pallete.dart';
-import 'package:blog_app/features/auth/presentation/login_page.dart';
-import 'package:blog_app/features/auth/widgets/auth_fields.dart';
-import 'package:blog_app/features/auth/widgets/auth_gradient_button.dart';
+import 'package:blog_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:blog_app/features/auth/presentation/pages/login_page.dart';
+import 'package:blog_app/features/auth/presentation/widgets/auth_fields.dart';
+import 'package:blog_app/features/auth/presentation/widgets/auth_gradient_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class SignupPage extends StatefulWidget {
-  static const String pageName='signUpPage';
+  static const String pageName = 'signUpPage';
   const SignupPage({super.key});
 
   @override
@@ -48,16 +50,36 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(height: 15),
               AuthFields(hintText: 'Email', controller: emailController),
               const SizedBox(height: 15),
-              AuthFields(hintText: 'Password', controller: passwordController, isObsucure: true,),
+              AuthFields(
+                hintText: 'Password',
+                controller: passwordController,
+                isObsucure: true,
+              ),
               const SizedBox(height: 20),
-              AuthGradientButton(buttonText: 'Sign Up'),
+              AuthGradientButton(
+                buttonText: 'Sign Up',
+                onPressed: () {
+                  if(formKey.currentState!.validate()){
+                    context.read<AuthBloc>().add(
+                      AuthSignUp(
+                        name: nameController.text.trim(),
+                        email: emailController.text.trim(),
+                        password: passwordController.text.trim(),
+                      ),
+                    );
+                  }
+                },
+              ),
               const SizedBox(height: 20),
 
               GestureDetector(
-                onTap: (){
-                  context.goNamed(LoginPage.pageName); //navigates to sing in page
+                onTap: () {
+                  context.goNamed(
+                    LoginPage.pageName,
+                  ); //navigates to sing in page
                 },
-                child: RichText( //used for placing 2 text widgets in a single line.
+                child: RichText(
+                  //used for placing 2 text widgets in a single line.
                   text: TextSpan(
                     text: 'Already have an account? ',
                     style: Theme.of(context).textTheme.titleMedium,

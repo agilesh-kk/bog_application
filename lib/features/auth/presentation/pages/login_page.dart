@@ -1,7 +1,7 @@
 import 'package:blog_app/core/theme/app_pallete.dart';
-import 'package:blog_app/features/auth/presentation/signup_page.dart';
-import 'package:blog_app/features/auth/widgets/auth_fields.dart';
-import 'package:blog_app/features/auth/widgets/auth_gradient_button.dart';
+import 'package:blog_app/features/auth/presentation/pages/signup_page.dart';
+import 'package:blog_app/features/auth/presentation/widgets/auth_fields.dart';
+import 'package:blog_app/features/auth/presentation/widgets/auth_gradient_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -45,7 +45,10 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 15),
               AuthFields(hintText: 'Password', controller: passwordController, isObsucure: true,),
               const SizedBox(height: 20),
-              AuthGradientButton(buttonText: 'Sign In'),
+              AuthGradientButton(
+                buttonText: 'Sign In',
+                onPressed: (){},
+              ),
               const SizedBox(height: 20),
 
               //used for placing 2 text widgets in a single line.

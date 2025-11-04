@@ -34,7 +34,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       return right(userId); //right function gives success message, the argument passed inside the right() is received as success
     } on ServerExceptions catch (e) {
-      return left(Failure(e.message));
+      return left(Failure(e.message)); //returns a Failure class message
     }
   }
 }

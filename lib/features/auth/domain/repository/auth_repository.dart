@@ -1,7 +1,7 @@
 import 'package:blog_app/core/errors/failure.dart';
 import 'package:fpdart/fpdart.dart';
 
-//creating the interface for the repository
+//creating the interface for the repository (it is independent)
 
 abstract interface class AuthRepository {
   Future <Either<Failure, String>> signUpWithEmailPassword({
