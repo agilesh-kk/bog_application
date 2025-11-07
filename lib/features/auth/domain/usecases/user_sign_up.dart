@@ -5,6 +5,7 @@ import 'package:blog_app/features/auth/domain/repository/auth_repository.dart';
 //import 'package:fpdart/src/either.dart';
 import 'package:fpdart/fpdart.dart';
 
+//use case for singup
 class UserSignUp implements UseCase<User, UserSignUpParams> {
   final AuthRepository authRepository;
   const UserSignUp(this.authRepository);
