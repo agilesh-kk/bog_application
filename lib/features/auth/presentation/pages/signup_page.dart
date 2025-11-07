@@ -1,6 +1,6 @@
 import 'package:blog_app/core/theme/app_pallete.dart';
 import 'package:blog_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:blog_app/features/auth/presentation/pages/login_page.dart';
+import 'package:blog_app/features/auth/presentation/pages/signin_page.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_fields.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_gradient_button.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +75,7 @@ class _SignupPageState extends State<SignupPage> {
               GestureDetector(
                 onTap: () {
                   context.goNamed(
-                    LoginPage.pageName,
+                    SigninPage.pageName,
                   ); //navigates to sing in page
                 },
                 child: RichText(
