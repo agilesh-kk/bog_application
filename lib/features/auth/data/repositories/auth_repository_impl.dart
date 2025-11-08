@@ -11,6 +11,21 @@ import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSources remoteDataSources;
   const AuthRepositoryImpl(this.remoteDataSources);
+
+  @override
+  Future<Either<Failure, User>> currentUser() async {
+    try{
+      final user = await remoteDataSources.getCurrentUserData();
+      if(user==null){
+        return left(Failure('User logged in!'));
+      }
+
+      return right(user);
+    }
+    on ServerExceptions catch(e){
+      return left(Failure(e.message));
+    }
+  }
                              
   @override                 
   Future<Either<Failure, User>> signinWithEmailPassword({
