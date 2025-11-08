@@ -1,3 +1,5 @@
+import 'package:blog_app/core/common/cubits/app%20user/app_user_cubit.dart';
+
 import 'package:blog_app/core/theme/app_theme.dart';
 import 'package:blog_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog_app/features/auth/presentation/pages/signin_page.dart';
@@ -14,7 +16,11 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        //signup bloc
+        //app user signed in cubit
+        BlocProvider(
+          create: (_) => serviceLocator<AppUserCubit>(), //loads the abuthbloc contents from the dependency file
+        ),
+        //bloc
         BlocProvider(
           create: (_) => serviceLocator<AuthBloc>(), //loads the abuthbloc contents from the dependency file
         ),
@@ -26,18 +32,20 @@ void main() async {
 }
 
 class MainApp extends StatefulWidget {
-  MainApp({super.key});
+  const MainApp({super.key});
 
   @override
   State<MainApp> createState() => _MainAppState();
 }
 
 class _MainAppState extends State<MainApp> {
+
   @override
   void initState() {
     super.initState();
     context.read<AuthBloc>().add(AuthUserIsSignedIn());
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -50,17 +58,46 @@ class _MainAppState extends State<MainApp> {
   }
 
   final _router = GoRouter(
+    initialLocation: '/',
+    redirect: (context, state) {
+      final isSignedIn = context.read<AppUserCubit>().state is AppUserIsSignedin;
+      
+      // If user is logged in and tries to access auth pages, redirect to home
+      if (isSignedIn && 
+          (state.matchedLocation == SigninPage.pageName || 
+           state.matchedLocation == '/${SignupPage.pageName}')) {
+        return '/';
+      }
+
+      // If user is not logged in and tries to access protected pages
+      if (!isSignedIn && !state.matchedLocation.startsWith(SigninPage.pageName)) {
+        return SigninPage.pageName;
+      }
+
+      return null; // no redirect needed
+    },
     routes: [
       GoRoute(
-        //the landing page is sign in page
+        path: '/',
+        builder: (context, state) => BlocSelector<AppUserCubit, AppUserState, bool>(
+          selector: (state) => state is AppUserIsSignedin,
+          builder: (context, isLoggedIn) {
+            // If not logged in, redirect to sign in page
+            if (!isLoggedIn) return const SigninPage();
+            // Replace this with your home page
+            return const Scaffold(body: Center(child: Text('Home Page')));
+          },
+        ),
+      ),
+      GoRoute(
         name: SigninPage.pageName,
         path: SigninPage.pageName,
-        builder: (context, state) => SigninPage(),
+        builder: (context, state) => const SigninPage(),
         routes: [
           GoRoute(
             name: SignupPage.pageName,
             path: SignupPage.pageName,
-            builder: (context, state) => SignupPage(),
+            builder: (context, state) => const SignupPage(),
           ),
         ],
       ),
