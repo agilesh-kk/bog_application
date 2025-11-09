@@ -17,7 +17,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try{
       final user = await remoteDataSources.getCurrentUserData();
       if(user==null){
-        return left(Failure('User logged in!'));
+        return left(Failure('User not logged in!'));
       }
 
       return right(user);
