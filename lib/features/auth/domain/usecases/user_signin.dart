@@ -22,3 +22,4 @@ class UserLoginParams {
 
   UserLoginParams({required this.email, required this.password});
 }
+

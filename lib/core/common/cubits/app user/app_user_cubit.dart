@@ -16,3 +16,4 @@ class AppUserCubit extends Cubit<AppUserState> {
     }
   }
 }
+

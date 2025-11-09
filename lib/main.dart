@@ -18,7 +18,7 @@ void main() async {
       providers: [
         //app user signed in cubit
         BlocProvider(
-          create: (_) => serviceLocator<AppUserCubit>(), //loads the abuthbloc contents from the dependency file
+          create: (_) => serviceLocator<AppUserCubit>(), //loads the app_user_cubit contents from the dependency file
         ),
         //bloc
         BlocProvider(
@@ -104,3 +104,4 @@ class _MainAppState extends State<MainApp> {
     ],
   );
 }
+
